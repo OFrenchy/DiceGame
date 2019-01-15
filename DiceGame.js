@@ -12,9 +12,11 @@
 // - (5 points): As a developer, I want to make consistent commits accompanied with good, 
 // 		descriptive commit messages.
 
-// As a dice game designer, I need to design a game that will be enjoyable to the user.
-// As a dice game designer, I need to alert the user to the rules
-// 
+// - As a dice game designer, I need to design a game that will be enjoyable to the user.
+// - As a dice game designer, I need to alert the user to the rules
+// - As a dice game designer, I want to allow the user to choose 
+// 		the number of dice and the number of faces on each die
+// - As a dice game designer, I need to calculate the range of a winning score
 
 
 // two die:  must beat 14, but not exceed 21
@@ -22,7 +24,51 @@
 // getting more than (numOfDice * numOfSidesOnDice) + (1/3 * the numOfSidesOnDice)
 // and not getting a score greater than (numOfSidesOnDice + 1) * (numOfDice * 1.5)
 
+
+
+
+// function to hide the dice
+function hideDice() {
+	
+	// loop through rows
+	for (let i = 1; i <= 2; i++) {
+		// loop through dice
+		for (let i2 = 1; i2 <= 6; i2++) {
+			document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.visibility = "hidden"; // visible or hidden
+			// document.getElementById("row1col1Die1").style.display = "none";
+			// console.log("test", document.getElementById("row1col1Die1").style.display);
+			// using display property
+			// image items instead of columns
+			// document.getElementById("die1").style.visibility = "hidden"; // visible or hidden
+		}
+	}
+	return;
+}
+
+// function to display a single die given row, column (column = die face)
+function showDie(rowToShow, columnToShow) {
+	// confirm("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow);
+	document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.visibility = "visible"; // visible or hidden
+	return;
+}
+
 function playDiceGame (){
+
+	// Hide the dice
+	hideDice();
+	
+	// test area for dice visibility
+
+	// showDie(1, 1);
+	// showDie(2, 2);
+	// hideDice();
+	// showDie(1, 4);
+	// showDie(2, 5);
+	// hideDice();
+
+	// alert("after test area");
+
+	// end test area for dice visibility
 
 	// Get the parameters from the user - number of dice 
 	let numOfDice = Number(prompt("Enter the number of dice to play with: ", 2));
@@ -44,6 +90,10 @@ function playDiceGame (){
 	let rollResults = 0;
 	let rollTotal = 0;
 	
+	//buttonDie1
+	//document.getElementById("buttonDie1").style.visibility = "hidden";
+	let thisElement = document.getElementById("buttonDie1") //.style.visibility = "hidden";
+
 	while (gameOver === false && rollAgain === true) {
 		// prompt the user for a roll
 		if (firstRoll == true) {
@@ -94,9 +144,15 @@ function rollOneDie(numberOfSides = 6) {
 // function to generate a number of random numbers, from 1 to the numberOfSides
 // returns an array of integers
 function rollDice(numberOfDice = 1, numberOfSides = 6) {
+	hideDice;
 	let diceArray = [];
 	for (let i = 0; i < numberOfDice; i++) {
-		diceArray.push( rollOneDie(numberOfSides));
+		//diceArray.push( rollOneDie(numberOfSides));
+		let diceRoll = rollOneDie(numberOfSides);
+		if (numberOfDice == 2 && numberOfSides == 6) {
+			showDie(i + 1, diceRoll);
+		}
+		diceArray.push(diceRoll);
 	}
 	console.log(diceArray);
 	return diceArray;
