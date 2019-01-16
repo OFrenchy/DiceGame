@@ -18,8 +18,9 @@
 // 		the number of dice and the number of faces on each die
 // - As a dice game designer, I need to calculate the range of a winning score
 // - As a dice game designer, I need to allow the user to stop the game at any point
+// - As a dice game designer, I want the screen to erase any dice showing when the user exits
 // - As a developer, I want to ALSO try to learn how to display and 
-//		hide the dice face if the user selects 2 dice and 6 faces - in order to 
+//		hide the dice faces if the user selects 6 faces and 6 or fewer dice - in order to 
 //		add a little "fun" factor, at least for the traditional game
 
 
@@ -33,20 +34,26 @@
 // As of this push, the dice will not display on Safari & IE 
 // UNLESS you set a breakpoint(!!!), or after you quit the game
 // To test this, place a breakpoint on the return at the very bottom of this file,
-// currently line 232
+// currently line 286
+
+// function showImg(){
+// 		document.getElementById("changethis").src = "dice2.jpg";
+// 		document.getElementById("row1Die1").src = "dice6.jpg";
+	
+// }
 
 function playDiceGame (){
 
-	// Hide the dice
-	hideDice();
+	// Hide the dice if visible
+	// hideDice();
 	
 	// --------------- test area for dice visibility
-
-	// showOrHideDie(1, 1, false);
-	// showOrHideDie(2, 2, false);
+	
+	// displayOrHideDie(1, 1, false);
+	// displayOrHideDie(2, 2, false);
 	// hideDice();
-	// showOrHideDie(1, 4, true);
-	// showOrHideDie(2, 5, true);
+	// displayOrHideDie(1, 4, true);
+	// displayOrHideDie(2, 5, true);
 	// hideDice();
 
 	//  alert("after test area");
@@ -88,6 +95,7 @@ function playDiceGame (){
 		}
 		// store the previous roll results for hiding the dice before showing new roll
 		previousDiceRoll = rollResults;
+
 		// roll the dice
 		rollResults = rollDice(numOfDice, numOfSidesOnDice);
 		
@@ -138,11 +146,32 @@ function playDiceGame (){
 			rollTotal = 0;
 		}
 	}
-	// Clean up before exit
-	if (numOfDice <= 6 && numOfSidesOnDice == 6) {
-		hideDice();
-	}
+	// // Clean up before exit
+	// if (numOfDice <= 6 && numOfSidesOnDice == 6) {
+	// 	hideDice();
+	// }
 }
+
+// function to hide all dice
+function hideDice() {
+	
+	// loop through dice, setting source to ""
+	for (let i = 1; i <= 6; i++) {
+		displayOrHideDie(1, i+1, false);
+	}
+	return;
+}
+
+// function to hide previous roll
+function hidePreviousDiceRoll(thisDiceRoll = []) {
+	// loop through array hidinbg the dice rolled
+	for (let i = 0; i < thisDiceRoll.length; i++) {
+		//showOrHideDie(i + 1, thisDiceRoll[i], false);
+		displayOrHideDie(thisDiceRoll[i], i+1, false);
+	}
+	return;
+}
+
 
 // function to generate a random number from 1 to the numberOfSides
 // returns an integer
@@ -168,66 +197,92 @@ function show6SidedDiceRoll(thisDiceRoll = [], previousDiceRoll = []) {
 	// hide the dice
 	//hideDice();
 	hidePreviousDiceRoll(previousDiceRoll);
-
+		
 	// loop through array showing the dice rolled
 	for (let i = 0; i < thisDiceRoll.length; i++) {
-		showOrHideDie(i + 1, thisDiceRoll[i], true);
+		//showOrHideDie(i + 1, thisDiceRoll[i], true);
+		displayOrHideDie(thisDiceRoll[i], i+1, true);
 	}
+	return true;
 }
 
-// function to hide all dice
-function hideDice() {
+// // function to display or hide a single die given row, column (column = die face)
+// function showOrHideDie(rowToShow, columnToShow, showTrueHideFalse) {
 	
-	// loop through rows
-	for (let i = 1; i <= 6; i++) {
-		// loop through dice
-		for (let i2 = 1; i2 <= 6; i2++) {
-			document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.display = "none"; // none or block
-		}
+// 	// object with visibility experiment, same results
+// 	// let thisObj = document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow);
+// 	// thisObj.style.visibility = "visible";
+	
+// 	console.log("in showOrHideDie " + rowToShow + ", " + columnToShow);
+
+// 	// visibility
+// 	//document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.visibility = "visible"; // visible or hidden
+// 	// display
+	
+// 	// if showTrueHideFalse is true, show, else hide
+// 	if (showTrueHideFalse === true) {
+// 		document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "block"; // none or block, or inline
+
+// 		//document.getElementById("imageid").src="../template/save.png";
+// 		document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).src = "dice1.jpg"
+// 	}
+// 	else {
+// 		document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "none"; // none or block
+// 	}
+	
+// 	// tried to set focus to this window to get dice to be displayed 
+// 	// but that did not work either
+// 	// let thisWindow = document.getElementById("windowDice");
+// 	// thisWindow.focus();
+
+// 	// tried to give it a 1/2 second timeout to get dice to be displayed 
+// 	// but that did not work either
+// 	// console.log("before timeout");
+// 	// setTimeout(function(){console.log("in timeout");}, 500);
+// 	// console.log("after timeout");
+	
+// 	// put breakpoint here to get the dice to show!!! ????	
+// 	return;
+// }
+
+// function to show or "hide" a single die
+function displayOrHideDie(result, dieNumber, displayTrueHideFalse){
+	dieNumber = dieNumber.toString();
+	
+	// if showing file, set the file name to dice#.jpg 
+	// otherwise we are hiding file, set the file name to ""
+	let sourceFile = "";
+	if(displayTrueHideFalse === true) {
+		sourceFile = "dice" + result.toString() + ".jpg";
+	}
+
+	switch(result)
+	{
+		case 1:
+			document.getElementById("row1Die" + dieNumber).src = sourceFile;
+			//document.getElementById("row1Die" + dieNumber).src = "dice1.jpg";
+			break;
+		case 2:
+			document.getElementById("row1Die" + dieNumber).src = sourceFile;
+			//document.getElementById("row1Die" + dieNumber).src = "dice2.jpg";
+			break;
+		case 3:
+			document.getElementById("row1Die" + dieNumber).src = sourceFile;
+			//document.getElementById("row1Die" + dieNumber).src = "dice3.jpg";
+			break;
+		case 4:
+			document.getElementById("row1Die" + dieNumber).src = sourceFile;
+			//document.getElementById("row1Die" + dieNumber).src = "dice4.jpg";
+			break;
+		case 5:
+			document.getElementById("row1Die" + dieNumber).src = sourceFile;
+			//document.getElementById("row1Die" + dieNumber).src = "dice5.jpg";
+			break;
+		case 6:
+			document.getElementById("row1Die" + dieNumber).src = sourceFile;
+			//document.getElementById("row1Die" + dieNumber).src = "dice6.jpg";
+			break;
 	}
 	return;
 }
 
-// function to hide previous roll
-function hidePreviousDiceRoll(thisDiceRoll = []) {
-	// loop through array hidinbg the dice rolled
-	for (let i = 0; i < thisDiceRoll.length; i++) {
-		showOrHideDie(i + 1, thisDiceRoll[i], false);
-	}
-}
-
-// function to display or hide a single die given row, column (column = die face)
-function showOrHideDie(rowToShow, columnToShow, showTrueHideFalse) {
-	
-	// object with visibility experiment, same results
-	// let thisObj = document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow);
-	// thisObj.style.visibility = "visible";
-	
-	console.log("in showOrHideDie " + rowToShow + ", " + columnToShow);
-
-	// visibility
-	//document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.visibility = "visible"; // visible or hidden
-	// display
-	
-	// if showTrueHideFalse is true, show, else hide
-	if (showTrueHideFalse === true) {
-		document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "block"; // none or block
-	}
-	else {
-		document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "none"; // none or block
-	}
-	
-	// tried to set focus to this window to get dice to be displayed 
-	// but that did not work either
-	// let thisWindow = document.getElementById("windowDice");
-	// thisWindow.focus();
-
-	// tried to give it a 1/2 second timeout to get dice to be displayed 
-	// but that did not work either
-	console.log("before timeout");
-	setTimeout(function(){console.log("in timeout")}, 500);
-	console.log("after timeout");
-	
-	// put breakpoint here to get the dice to show!!! ????	
-	return;
-}

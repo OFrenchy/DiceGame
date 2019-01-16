@@ -4,8 +4,10 @@
 	    <title>Dean Bourgeois:  Dice Game</title>
 	    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
 	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <!-- was bootstrap/3.3.7 -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	    <script src="DiceGame.js"></script>
 	</head>
 
@@ -22,167 +24,51 @@
 	    		</div>
 		    </div>
 		    <br>
-		    <div class="row">
+		    <div class="row"> 	
+				<img id="row1Die1" height="80" src="">
+				<br>
+				<img id="row1Die2" height="80" src="">
+				<br>
+				<img id="row1Die3" height="80" src="">
+				<br>
+				<img id="row1Die4" height="80" src="">
+				<br>
+				<img id="row1Die5" height="80" src="">
+				<br>
+				<img id="row1Die6" height="80" src="">
+				
+				<!-- <img id="changethis" src="">
+		    	<br>
+		    	<button onclick="showImg()"></button> -->
+		    	
+
+
+
 		    	<!-- die 1 -->
 		    	<!-- none/block: style="display:none" or style="display:block" -->
 		    	<!-- hidden/visible: style="visibility:hidden" or style="visibility:visible" -->
 		        <!-- <div class="col-md-1" id ="row1Col1Die1" style="visibility:hidden"> 
 					<img src="dice1.jpg" id="row1Die1" height="40">
 				</div>	 -->
-		    	<div class="col-md-1" id ="row1Col1Die1" style="display:none"> 
-					<img src="dice1.jpg" id="row1Die1" height="40">
-				</div>	
+		    	<!-- <div class="col-md-1" id ="row1Col1Die1" style="display:block">  -->
+				<div class="col-md-12" id ="displayText"> 
+					<!-- <img src="dice1.jpg" id="row1Die1" height="40"> -->
+				
+					<!-- <img id="row1Die1" height="40" src="">
+					<img id="row1Die2" height="40" src="">
+					<img id="row1Die3" height="40" src="">
+					<img id="row1Die4" height="40" src="">
+					<img id="row1Die5" height="40" src="">
+					<img id="row1Die6" height="40" src=""> -->
+				
+					<!-- <button id="row1Die1" <img src="dice1.jpg" height="40"></button> -->
 
-		    	<!-- die 2 -->
-		        <div class="col-md-1" id ="row1Col2Die2" style="display:none"> 
-					<img src="dice2.jpg" id="row1Die2" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row1Col3Die3" style="display:none"> 
-					<img src="dice3.jpg" id="row1Die3" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row1Col4Die4" style="display:none"> 
-					<img src="dice4.jpg" id="row1Die4" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row1Col5Die5" style="display:none"> 
-					<img src="dice5.jpg" id="row1Die5" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row1Col6Die6" style="display:none"> 
-					<img src="dice6.jpg" id="row1Die6" height="40">
-				</div>	
-		    	<div class="col-md-6">
-	    		</div>
+				</div>
+
+
 			</div>
-	    	<br>
-		    <div class="row">
-		    	<div class="col-md-1" id ="row2Col1Die1" style="display:none"> 
-					<img src="dice1.jpg" id="row2Die1" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row2Col2Die2" style="display:none"> 
-					<img src="dice2.jpg" id="row2Die2" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row2Col3Die3" style="display:none"> 
-					<img src="dice3.jpg" id="row2Die3" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row2Col4Die4" style="display:none"> 
-					<img src="dice4.jpg" id="row2Die4" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row2Col5Die5" style="display:none"> 
-					<img src="dice5.jpg" id="row2Die5" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row2Col6Die6" style="display:none"> 
-					<img src="dice6.jpg" id="row2Die6" height="40">
-				</div>	
-		    	<div class="col-md-6">
-	    		</div>
-			</div>
-	    	<br>
-		    <div class="row">
-		    	<div class="col-md-1" id ="row3Col1Die1" style="display:none"> 
-					<img src="dice1.jpg" id="row3Die1" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row3Col2Die2" style="display:none"> 
-					<img src="dice2.jpg" id="row3Die2" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row3Col3Die3" style="display:none"> 
-					<img src="dice3.jpg" id="row3Die3" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row3Col4Die4" style="display:none"> 
-					<img src="dice4.jpg" id="row3Die4" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row3Col5Die5" style="display:none"> 
-					<img src="dice5.jpg" id="row3Die5" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row3Col6Die6" style="display:none"> 
-					<img src="dice6.jpg" id="row3Die6" height="40">
-				</div>	
-		    	<div class="col-md-6">
-	    		</div>
-			</div>
-	    	<br>
-		    <div class="row">
-		    	<div class="col-md-1" id ="row4Col1Die1" style="display:none"> 
-					<img src="dice1.jpg" id="row4Die1" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row4Col2Die2" style="display:none"> 
-					<img src="dice2.jpg" id="row4Die2" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row4Col3Die3" style="display:none"> 
-					<img src="dice3.jpg" id="row4Die3" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row4Col4Die4" style="display:none"> 
-					<img src="dice4.jpg" id="row4Die4" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row4Col5Die5" style="display:none"> 
-					<img src="dice5.jpg" id="row4Die5" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row4Col6Die6" style="display:none"> 
-					<img src="dice6.jpg" id="row4Die6" height="40">
-				</div>	
-		    	<div class="col-md-6">
-	    		</div>
-			</div>
-	    	<br>
-		    <div class="row">
-		    	<div class="col-md-1" id ="row5Col1Die1" style="display:none"> 
-					<img src="dice1.jpg" id="row5Die1" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row5Col2Die2" style="display:none"> 
-					<img src="dice2.jpg" id="row5Die2" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row5Col3Die3" style="display:none"> 
-					<img src="dice3.jpg" id="row5Die3" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row5Col4Die4" style="display:none"> 
-					<img src="dice4.jpg" id="row5Die4" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row5Col5Die5" style="display:none"> 
-					<img src="dice5.jpg" id="row5Die5" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row5Col6Die6" style="display:none"> 
-					<img src="dice6.jpg" id="row5Die6" height="40">
-				</div>	
-		    	<div class="col-md-6">
-	    		</div>
-			</div>
-	    	<br>
-		    <div class="row">
-		    	<div class="col-md-1" id ="row6Col1Die1" style="display:none"> 
-					<img src="dice1.jpg" id="row6Die1" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row6Col2Die2" style="display:none"> 
-					<img src="dice2.jpg" id="row6Die2" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row6Col3Die3" style="display:none"> 
-					<img src="dice3.jpg" id="row6Die3" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row6Col4Die4" style="display:none"> 
-					<img src="dice4.jpg" id="row6Die4" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row6Col5Die5" style="display:none"> 
-					<img src="dice5.jpg" id="row6Die5" height="40">
-				</div>	
-		        <div class="col-md-1" id ="row6Col6Die6" style="display:none"> 
-					<img src="dice6.jpg" id="row6Die6" height="40">
-				</div>	
-		    	<div class="col-md-6">
-	    		</div>
-			</div>
-	    		<!-- <br>
-				<div class="col-md-12">
-		        </div>
-		        <br>
-				<div class="col-md-12">
-			    </div>
-		        <br>
-				<div class="col-md-12">
-		        </div>
-			    <br>
-				<div class="col-md-12">
-			     --></div>
-		    </div>
 		</div>
-	<!-- Tried putting script load here, didn't help
-	<script src="DiceGame.js"></script> -->
 	</body>
 </html>
+
 
