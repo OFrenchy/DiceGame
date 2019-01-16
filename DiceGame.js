@@ -18,68 +18,29 @@
 // 		the number of dice and the number of faces on each die
 // - As a dice game designer, I need to calculate the range of a winning score
 // - As a dice game designer, I need to allow the user to stop the game at any point
+// - As a developer, I want to ALSO try to learn how to display and 
+//		hide the dice face if the user selects 2 dice and 6 faces - in order to 
+//		add a little "fun" factor, at least for the traditional game
 
 
-
-// two die:  must beat 14, but not exceed 21
-// thus it appears that the game is won by 
+// Based on what I know of the game of 21 played with two dice, a winning score is
+// 14 or higher and 21 or less - but to add a little challenge, 
+// I changed it to 16 or higher.  If the player exceeds 21, they lose.
+// Thus it appears that the game is won by 
 // getting more than (numOfDice * numOfSidesOnDice) + (2/3 * the numOfSidesOnDice)
 // and not getting a score greater than (numOfSidesOnDice + 1) * (numOfDice * 1.5)
 
-
-
-
-// function to hide the dice
-function hideDice() {
-	
-	// loop through rows
-	for (let i = 1; i <= 2; i++) {
-		// loop through dice
-		for (let i2 = 1; i2 <= 6; i2++) {
-			
-			// object with visibility experiment, same results
-			// let thisObj = document.getElementById("row" + i + "Col" + i2 + "Die" + i2);
-			// thisObj.style.visibility = "hidden";
-			
-			// visibility
-			document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.visibility = "hidden"; // visible or hidden
-			// display
-			//document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.display = "none"; // none or block
-			
-			// image items instead of columns
-			// document.getElementById("die1").style.visibility = "hidden"; // visible or hidden
-		}
-	}
-
-	// put breakpoint here to get the dice to hide!!! ????
-
-	return;
-}
-
-// function to display a single die given row, column (column = die face)
-function showDie(rowToShow, columnToShow) {
-	// confirm("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow);
-	
-	// object with visibility experiment, same results
-	// let thisObj = document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow);
-	// thisObj.style.visibility = "visible";
-	
-	// visibility
-	document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.visibility = "visible"; // visible or hidden
-	// display
-	//document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "block"; // none or block
-	
-	// put breakpoint here to get the dice to show!!! ????
-	
-	return;
-}
+// As of this push, the dice will not display on Safari & IE 
+// UNLESS you set a breakpoint(!!!), or after you quit the game
+// To test this, place a breakpoint on the return at the very bottom of this file,
+// currently line 225
 
 function playDiceGame (){
 
 	// Hide the dice
 	hideDice();
 	
-	// test area for dice visibility
+	// --------------- test area for dice visibility
 
 	// showDie(1, 1);
 	// showDie(2, 2);
@@ -90,7 +51,7 @@ function playDiceGame (){
 
 	// alert("after test area");
 
-	// end test area for dice visibility
+	// --------------- end test area for dice visibility
 
 	// Get the parameters from the user - number of dice, number of faces on dice
 	let numOfDice = Number(prompt("Enter the number of dice to play with: ", 2));
@@ -110,7 +71,7 @@ function playDiceGame (){
 	let firstRoll = true;
 	let gameScore = 0;
 	let rollResults = 0;
-	let rollTotal = 0;
+	let rollTotal = 0;		
 	
 	// Play the game until the user selects cancel
 	while (gameOver === false && rollAgain === true) {		
@@ -127,13 +88,18 @@ function playDiceGame (){
 		// roll the dice
 		rollResults = rollDice(numOfDice, numOfSidesOnDice);
 		
+		// if we're using 6-sided dice and there are 6 or fewer dice, we can show them
+		if (numOfDice <= 6 && numOfSidesOnDice == 6) {
+			show6SidedDiceRoll (rollResults);
+		}
+
 		// put breakpoint here to get the dice to show!!! ????
 
 		// total this roll
 		rollTotal = rollResults.reduce(function(total,el){
 			return total + el;
 		});
-		console.log(rollResults, rollTotal);
+		console.log("rollResults = " + rollResults + "  rollTotal = " + rollTotal);
 		// add this roll to the game score thus far
 		gameScore = gameScore + rollTotal;
 
@@ -163,6 +129,7 @@ function playDiceGame (){
 		
 		// if game is over but they want to play again, reset the values
 		if (gameOver === true && rollAgain === true) {
+			//resetGameParameters();
 			gameOver = false;
 			userWon = false;
 			firstRoll = true;
@@ -181,22 +148,79 @@ function rollOneDie(numberOfSides = 6) {
 
 // function to generate a number of random numbers, from 1 to the numberOfSides
 // Returns an array of integers.
-// If there are 2 dice having 6 sides, we have images, so display them
+// If there are 6 or less dice have 6 sides, we have images, so display them
 function rollDice(numberOfDice = 1, numberOfSides = 6) {
 	
-	if (numberOfDice == 2 && numberOfSides == 6) {
-		hideDice();
-	}
 	let diceArray = [];
 	for (let i = 0; i < numberOfDice; i++) {
-		//diceArray.push( rollOneDie(numberOfSides));
 		let diceRoll = rollOneDie(numberOfSides);
-		if (numberOfDice == 2 && numberOfSides == 6) {
-			showDie(i + 1, diceRoll);
-		}
 		diceArray.push(diceRoll);
 	}
-	console.log(diceArray);
+	console.log("diceArray = " + diceArray);
 	return diceArray;
 }
 
+// show the images of a 6-sided dice roll
+function show6SidedDiceRoll(thisDiceRoll = []) {
+	
+	// hide the dice
+	hideDice();
+
+	// loop through array showing the dice rolled
+	for (let i = 0; i < thisDiceRoll.length; i++) {
+		showDie(i + 1, thisDiceRoll[i]);
+	}
+}
+
+// function to hide all dice
+function hideDice() {
+	
+	// loop through rows
+	for (let i = 1; i <= 6; i++) {
+		// loop through dice
+		for (let i2 = 1; i2 <= 6; i2++) {
+			
+			// object with visibility experiment, same results
+			// let thisObj = document.getElementById("row" + i + "Col" + i2 + "Die" + i2);
+			// thisObj.style.visibility = "hidden";
+			
+			// visibility
+			//document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.visibility = "hidden"; // visible or hidden
+			// display
+			document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.display = "none"; // none or block
+			
+			// image items instead of columns
+			// document.getElementById("die1").style.visibility = "hidden"; // visible or hidden
+		}
+	}
+	return;
+}
+
+// function to display a single die given row, column (column = die face)
+function showDie(rowToShow, columnToShow) {
+	
+	// object with visibility experiment, same results
+	// let thisObj = document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow);
+	// thisObj.style.visibility = "visible";
+	
+	console.log("in showDie " + rowToShow + ", " + columnToShow);
+
+	// visibility
+	//document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.visibility = "visible"; // visible or hidden
+	// display
+	document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "block"; // none or block
+	
+	// tried to set focus to this window to get dice to be displayed 
+	// but that did not work either
+	// let thisWindow = document.getElementById("windowDice");
+	// thisWindow.focus();
+
+	// tried to give it a 1/2 second timeout to get dice to be displayed 
+	// but that did not work either
+	console.log("before timeout");
+	setTimeout(function(){console.log("in timeout")}, 500);
+	console.log("after timeout");
+	
+	// put breakpoint here to get the dice to show!!! ????	
+	return;
+}
