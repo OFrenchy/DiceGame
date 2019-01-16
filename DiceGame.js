@@ -33,7 +33,7 @@
 // As of this push, the dice will not display on Safari & IE 
 // UNLESS you set a breakpoint(!!!), or after you quit the game
 // To test this, place a breakpoint on the return at the very bottom of this file,
-// currently line 225
+// currently line 232
 
 function playDiceGame (){
 
@@ -42,14 +42,14 @@ function playDiceGame (){
 	
 	// --------------- test area for dice visibility
 
-	// showDie(1, 1);
-	// showDie(2, 2);
+	// showOrHideDie(1, 1, false);
+	// showOrHideDie(2, 2, false);
 	// hideDice();
-	// showDie(1, 4);
-	// showDie(2, 5);
+	// showOrHideDie(1, 4, true);
+	// showOrHideDie(2, 5, true);
 	// hideDice();
 
-	// alert("after test area");
+	//  alert("after test area");
 
 	// --------------- end test area for dice visibility
 
@@ -70,7 +70,8 @@ function playDiceGame (){
 	let userWon = false;
 	let firstRoll = true;
 	let gameScore = 0;
-	let rollResults = 0;
+	let rollResults = [];
+	let previousDiceRoll = [];
 	let rollTotal = 0;		
 	
 	// Play the game until the user selects cancel
@@ -85,15 +86,16 @@ function playDiceGame (){
 		if (rollAgain == false) {
 			return;
 		}
+		// store the previous roll results for hiding the dice before showing new roll
+		previousDiceRoll = rollResults;
 		// roll the dice
 		rollResults = rollDice(numOfDice, numOfSidesOnDice);
 		
 		// if we're using 6-sided dice and there are 6 or fewer dice, we can show them
+		// and hide the previous dice roll (if there was one)
 		if (numOfDice <= 6 && numOfSidesOnDice == 6) {
-			show6SidedDiceRoll (rollResults);
+			show6SidedDiceRoll (rollResults, previousDiceRoll);
 		}
-
-		// put breakpoint here to get the dice to show!!! ????
 
 		// total this roll
 		rollTotal = rollResults.reduce(function(total,el){
@@ -125,7 +127,6 @@ function playDiceGame (){
 
 		// display the message to the user
 		rollAgain = confirm (rollResultsString);
-		//alert("rollAgain = " + rollAgain);
 		
 		// if game is over but they want to play again, reset the values
 		if (gameOver === true && rollAgain === true) {
@@ -134,9 +135,12 @@ function playDiceGame (){
 			userWon = false;
 			firstRoll = true;
 			gameScore = 0;
-			rollResults = 0;
 			rollTotal = 0;
 		}
+	}
+	// Clean up before exit
+	if (numOfDice <= 6 && numOfSidesOnDice == 6) {
+		hideDice();
 	}
 }
 
@@ -148,9 +152,7 @@ function rollOneDie(numberOfSides = 6) {
 
 // function to generate a number of random numbers, from 1 to the numberOfSides
 // Returns an array of integers.
-// If there are 6 or less dice have 6 sides, we have images, so display them
-function rollDice(numberOfDice = 1, numberOfSides = 6) {
-	
+function rollDice(numberOfDice = 1, numberOfSides = 6) {	
 	let diceArray = [];
 	for (let i = 0; i < numberOfDice; i++) {
 		let diceRoll = rollOneDie(numberOfSides);
@@ -161,14 +163,15 @@ function rollDice(numberOfDice = 1, numberOfSides = 6) {
 }
 
 // show the images of a 6-sided dice roll
-function show6SidedDiceRoll(thisDiceRoll = []) {
+function show6SidedDiceRoll(thisDiceRoll = [], previousDiceRoll = []) {
 	
 	// hide the dice
-	hideDice();
+	//hideDice();
+	hidePreviousDiceRoll(previousDiceRoll);
 
 	// loop through array showing the dice rolled
 	for (let i = 0; i < thisDiceRoll.length; i++) {
-		showDie(i + 1, thisDiceRoll[i]);
+		showOrHideDie(i + 1, thisDiceRoll[i], true);
 	}
 }
 
@@ -179,36 +182,40 @@ function hideDice() {
 	for (let i = 1; i <= 6; i++) {
 		// loop through dice
 		for (let i2 = 1; i2 <= 6; i2++) {
-			
-			// object with visibility experiment, same results
-			// let thisObj = document.getElementById("row" + i + "Col" + i2 + "Die" + i2);
-			// thisObj.style.visibility = "hidden";
-			
-			// visibility
-			//document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.visibility = "hidden"; // visible or hidden
-			// display
 			document.getElementById("row" + i + "Col" + i2 + "Die" + i2).style.display = "none"; // none or block
-			
-			// image items instead of columns
-			// document.getElementById("die1").style.visibility = "hidden"; // visible or hidden
 		}
 	}
 	return;
 }
 
-// function to display a single die given row, column (column = die face)
-function showDie(rowToShow, columnToShow) {
+// function to hide previous roll
+function hidePreviousDiceRoll(thisDiceRoll = []) {
+	// loop through array hidinbg the dice rolled
+	for (let i = 0; i < thisDiceRoll.length; i++) {
+		showOrHideDie(i + 1, thisDiceRoll[i], false);
+	}
+}
+
+// function to display or hide a single die given row, column (column = die face)
+function showOrHideDie(rowToShow, columnToShow, showTrueHideFalse) {
 	
 	// object with visibility experiment, same results
 	// let thisObj = document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow);
 	// thisObj.style.visibility = "visible";
 	
-	console.log("in showDie " + rowToShow + ", " + columnToShow);
+	console.log("in showOrHideDie " + rowToShow + ", " + columnToShow);
 
 	// visibility
 	//document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.visibility = "visible"; // visible or hidden
 	// display
-	document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "block"; // none or block
+	
+	// if showTrueHideFalse is true, show, else hide
+	if (showTrueHideFalse === true) {
+		document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "block"; // none or block
+	}
+	else {
+		document.getElementById("row" + rowToShow + "Col" + columnToShow + "Die" + columnToShow).style.display = "none"; // none or block
+	}
 	
 	// tried to set focus to this window to get dice to be displayed 
 	// but that did not work either
