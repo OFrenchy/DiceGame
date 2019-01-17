@@ -22,6 +22,9 @@
 // - As a developer, I want to ALSO try to learn how to display and 
 //		hide the dice faces if the user selects 6 faces and 6 or fewer dice - in order to 
 //		add a little "fun" factor, at least for the traditional game
+// - As a student, I want to figure out EITHER 
+//		a) why the images of the dice do not display & hide as expected, OR
+//		b) how to program around this issue.
 
 
 // Based on what I know of the game of 21 played with two dice, a winning score is
@@ -32,28 +35,22 @@
 // and not getting a score greater than (numOfSidesOnDice + 1) * (numOfDice * 1.5)
 
 // As of this push, the dice will not display on Safari & IE 
-// UNLESS you set a breakpoint(!!!), or after you quit the game
+// UNLESS you set a breakpoint(!!!), or after you exit the game
 // To test this, place a breakpoint on the return at the very bottom of this file,
-// currently line 286
+// currently line 283
+// Further, the dice do not disappear/hide until some time later, or 
+// after you move the focus off of the browser & then back to the browser.
 
-// function showImg(){
-// 		document.getElementById("changethis").src = "dice2.jpg";
-// 		document.getElementById("row1Die1").src = "dice6.jpg";
-	
-// }
 
 function playDiceGame (){
-
-	// Hide the dice if visible
-	// hideDice();
 	
 	// --------------- test area for dice visibility
 	
-	// displayOrHideDie(1, 1, false);
-	// displayOrHideDie(2, 2, false);
-	// hideDice();
 	// displayOrHideDie(1, 4, true);
 	// displayOrHideDie(2, 5, true);
+	// hideDice();
+	// displayOrHideDie(1, 1, false);
+	// displayOrHideDie(2, 2, false);
 	// hideDice();
 
 	//  alert("after test area");
@@ -73,6 +70,7 @@ function playDiceGame (){
 		" or less. Click OK to roll the dice, or Cancel to cancel:");
 	if (rollAgain === 0) {return;}
 	
+	// prepare for first roll & first time through the loop
 	let gameOver = false;
 	let userWon = false;
 	let firstRoll = true;
@@ -138,7 +136,7 @@ function playDiceGame (){
 		
 		// if game is over but they want to play again, reset the values
 		if (gameOver === true && rollAgain === true) {
-			//resetGameParameters();
+			// reset game parameters
 			gameOver = false;
 			userWon = false;
 			firstRoll = true;
@@ -147,17 +145,16 @@ function playDiceGame (){
 		}
 	}
 	// // Clean up before exit
-	// if (numOfDice <= 6 && numOfSidesOnDice == 6) {
-	// 	hideDice();
-	// }
+	if (numOfDice <= 6 && numOfSidesOnDice == 6) {
+		hideDice();
+	}
 }
 
 // function to hide all dice
-function hideDice() {
-	
+function hideDice() {	
 	// loop through dice, setting source to ""
 	for (let i = 1; i <= 6; i++) {
-		displayOrHideDie(1, i+1, false);
+		displayOrHideDie(1, i, false);
 	}
 	return;
 }
@@ -167,11 +164,11 @@ function hidePreviousDiceRoll(thisDiceRoll = []) {
 	// loop through array hidinbg the dice rolled
 	for (let i = 0; i < thisDiceRoll.length; i++) {
 		//showOrHideDie(i + 1, thisDiceRoll[i], false);
-		displayOrHideDie(thisDiceRoll[i], i+1, false);
+		//displayOrHideDie(thisDiceRoll[i], i+1, false);
+		displayOrHideDie(1, i+1, false);
 	}
 	return;
 }
-
 
 // function to generate a random number from 1 to the numberOfSides
 // returns an integer
